@@ -1,0 +1,86 @@
+----EVENT FILTERS----
+when the local network is one of the following networks
+when the destination network is one of the following networks
+when the IP protocol is one of the following protocols
+when the Event Payload contains this string
+when the source port is one of the following ports
+when the destination port is one of the following ports
+when the local port is one of the following ports
+when the remote port is one of the following ports
+when the source IP is one of the following IP addresses
+when the destination IP is one of the following IP addresses
+when the local IP is one of the following IP addresses
+when the remote IP is one of the following IP addresses
+when either the source or destination IP is one of the following IP addresses
+when the event(s) were detected by one or more of these log sources
+when the event(s) were detected by one or more of these log source types
+when the event(s) occur on the selected day of the month
+when the event(s) occur on any of these days of the week
+when the event(s) occur after this time
+when the event QID is one of the following QIDs
+when the event context is this context
+when the event category for the event is one of the following categories
+when the event severity is greater than 5 {default}
+when the event credibility is greater than 5 {default}
+when the event relevance is greater than 5 {default}
+when the source is local or remote {default: remote}
+when the destination is local or remote {default: remote}
+when the local source host destination port is open either actively or passively seen
+when the local source host exists either actively or passively seen
+when the local source host profile age is greater than this number of time intervals
+when the local source host profile port age is greater than this number of time intervals
+when the source is located in this geographic location
+when the destination asset has a weight greater than this weight
+when the destination is vulnerable to current exploit on any port
+when an event matches any|all of the following rules
+when all of these rules, in|in any order, from the same|any source IP to the same|any destination IP, over this many seconds
+when the event(s) have not been detected by one or more of these log source types for this many seconds
+when a subset of at least this number of these rules, in|in any order, from the same|any source IP to the same|any destination IP, over this many seconds
+when this sequence of rules, involving the same source and destination hosts in this many seconds
+when a(n) source IP matches more than|exactly this many of these rules across more than|exactly this many destination IP, over this many minutes
+when any of these rules with the same source IP more than this many times, across more than|exactly this many destination IP within this many minutes
+when the false positive signature matches one of the following signatures
+when the event(s) have not been detected by one or more of these log sources for this many seconds
+when the event(s) were detected by one or more of these log source groups
+when a subset of at least this many of these rules, in|in any order, with the same username followed by a subset of at least this many of these rules in|in any order to|from the same destination IP from the previous sequence, within this many minutes
+when the identity username matches the following regex
+when the username changes more than this many times within this many hours on a single host
+when the source IP is vulnerable to one of the following OSVDB IDs
+when the source IP is a part of any of the following remote network locations
+when the source IP is a part of any of the following remote services network locations
+when the source IP is a part of any of the following geographic network locations
+when any of these event properties are contained in any of these reference set(s)
+when any of these event properties is the key and any of these event properties is the value in any of these reference maps
+when any of these event properties is the key and any of these event properties is the value in any of these reference map of sets
+when any of these event properties is the key of the first map and any of these event properties is the key of the second map and any of these event properties is the value in any of these reference map of maps
+when Reference Table Key data matches any|all selected event properties and selected reference table column Select operator the value of selected event property
+when this host property is categorized by X-Force as this category with confidence value equal to this amount
+when URL (custom) is categorized by X-Force as one of the following categories
+when destination host has a CVSS risk value greater than this amount
+when destination port has a CVSS risk value greater than this amount
+when the source or destination port is any of these ports
+when the event matches this search filter
+when any of these properties match this regular expression
+when any of these properties contain any of these hexadecimal values
+when at least this many events are seen with the same event properties in this many minutes
+when at least this many events are seen with the same event properties and different event properties in this many minutes
+when these rules match at least this many times in this many minutes
+when these rules match at least this many times with the same event properties in this many minutes
+when these rules match at least this many times with the same event properties and different event properties in this many minutes
+when these rules match at least this many times in this many minutes after any of these rules match
+when these rules match at least this many times with the same event properties in this many minutes after these rules match
+when these rules match at least this many times with the same event properties and different event properties in this many minutes after these rules match
+when these rules match at least this many times in this many minutes after any of these rules match with the same event properties
+when these rules match at least this many times with the same event properties in this many minutes after these rules match with the same event properties
+when these rules match at least this many times with the same event properties and different event properties in this many minutes after these rules match with the same event properties
+when at least this many events are seen with the same event properties and different event properties in this many minutes after these rules match
+when at least this many events are seen with the same event properties in this many minutes after these rules match with the same event properties
+when at least this many events are seen with the same event properties and different event properties in this many minutes after these rules match with the same event properties
+when none of these rules match in this many minutes after these rules match with the same event properties
+when none of these rules match in this many minutes after these rules match
+when the domain is one of the following domains
+when the event(s) have not been detected by one or more of these log source groups for this many seconds
+when the event matches this AQL filter query
+when this property equals this property
+when the event(s) occur between this time and this time
+----EVENT FILTERS----

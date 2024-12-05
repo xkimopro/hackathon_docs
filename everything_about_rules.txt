@@ -1,0 +1,395 @@
+Special thanks to Greg Davis for teaching me a lot of what is in this post many moons ago, and to Colin Hay for proof-reading it !
+
+Hi guys !
+
+You're starting to know me now, I like to centralize information and I am about to talk about rules, so this is probably going to be the biggest blog post I am going to write (I don't think it can still be called a blog at this point) ! 
+
+This document is more like an advanced documentation, and you'll learn everything from "what are the different types of rules" to "how does the correlation engine process the rules".
+There is a lot of information, but I am adding a table of content so you can easily navigate to the parts that you are interested in. 
+
+What is the Custom Rules Engine (CRE) ?
+What are the types of rules?
+Tests evaluation order
+Order of rules in CRE
+What type of data can rules test?
+Special case: the negative tests
+Rules Global and Local
+Rule Actions and Responses
+Rules Updates
+Best practices when writing rules
+
+  
+What is the Custom Rules Engine (CRE) ?
+
+The Custom Rules Engine (CRE) is a flexible engine for correlating events, flow, and offense data. The correlation takes place through a series of out-of-the-box and user-created rules that get evaluated against the events and flows as they pass in near-real time through the QRadar pipeline.
+ 
+What are the types of rules?
+
+There are two types of rule: Rules and Building Blocks. 
+
+A rule is a group of tests that can trigger an action if specific conditions are met.
+Rules are configured to capture and respond to specific sequence of events, flows, or offenses in order to trigger an action such as sending an email notification or syslog message.
+
+Note: Inside the rules category, you can find the "traditional" correlation rules, but also anomaly rules.
+The latter are so special that I believe they would deserve a dedicated blog. So today we are only going to talk about traditional correlation rules and you can refer to the online documentation for more information about the anomaly rules here. 
+
+A building block is rule with no action or response. The only action a building block takes is to tag the events and flow records when it matches the series of tests. They are used as a common variable in multiple rules and to build complex rules or logic that you want to use in other rules.
+
+Note: To be “enabled”, a building block needs to be referenced in a rule.
+If no rule is referring to a building block then the building block will not be executed. 
+If you would like the building block to be executed in order to tag the events, you can add the building block to the rule Load Basic Building Blocks or User Load Basic Building Blocks (prefer the later one to receive IBM Content Team’s updates in the first one).
+ 
+Tests evaluation order
+
+QRadar tests can be separated in two types: Stateless and Stateful
+
+A stateless test is any test that can make a true or false assertion with a single event or a single flow. QRadar needs only the one event or flow to consider the test to be a success or a failure.
+
+A stateful test is when QRadar needs more than one event or flow, occurring in a specific timeframe, to determine if the situation is happening. 
+
+QRadar’s Custom Rules Engine (CRE) always processes the Stateless tests first, in order. Then the Stateful tests last, regardless of their order in the rule.
+
+Examples:
+
+and when the event(s) occur on any of Wednesday, Friday is a Stateless test so it will be tested first
+and when the username changes more than 3 times within 60 minutes on a single host is a Stateful test and will be tested after the Stateless test
+and when the hostname changes more than 2 times within 8 hours on a single host is a Stateful test and will be tested after the Stateless test
+
+The following rule works exactly the same way, even with the "day of the week" filter being added in last position. 
+and when the event(s) occur on any of Wednesday, Friday is a Stateless test so it will be tested first
+
+In the next example we removed the stateless test, the two stateful tests will be processed in order (this means that the second test will be tested only if the first one is a success)
+
+Warning: Counters are reset when the ecs-ep service restarts or when the rule is saved.
+For long term monitoring, one option is to use Reference Data
+ 
+Order of rules in CRE
+
+Sometimes you might be wondering why your rule is not doing what you want; the offense is not being created, the notification is not being sent... Right ? You might find the answer in what follows.
+
+    The first rule loaded is FalsePositive: False Positive Rules and Building Blocks, preceded by all its dependencies (meaning all the "BB:FalsePositive:" servers and event definitions and what they include).
+    Then it keeps going with the other Building Blocks and their dependencies.
+    The rules are loaded at the end.
+
+If an offense is not firing or any response is not taken, the first thing to look at is if the event is not caught by a false positive Building Block.
+You can find the information at the bottom of each event or flow
+
+ 
+What type of data can rules test?
+
+There are four categories of rule types:
+
+    Event rules
+    Flow rules
+    Common rules
+    Offense rules
+
+Event rules
+
+The event rules test against incoming log source data that is processed in real time by the QRadar Event Processor.
+
+You can create an event rule to detect one single event, or events sequences.
+For example, to monitor your network for unsuccessful login attempts, access multiple hosts, or a reconnaissance event followed by an exploit, you create an event rule.
+
+It is common for event rules to create offenses as a response.
+
+There are 12 types of test for event rules:
+Flow rules
+
+The flow rules test against incoming flow data that is processed by the QRadar Flow Processor.
+
+You can create a flow rule to detect one single flow, or flows sequences.
+
+It is common for flow rules to create offenses as a response.
+
+There is 11 types of tests dedicated to flows:
+Common rules
+
+The common rules test against both event and flow data.
+
+For example, you can create a common rule to detect events and flows that have a specific source IP address.
+
+It is common for common rules to create offenses as a response.
+
+There is 10 groups of tests available for Common Rules:
+Offense rules
+
+The offense rules test the parameters of offenses to trigger more responses.
+
+For example, you can trigger a response when new events are added, or schedule offenses reassessment at a specific date and time.
+You can also monitor offense magnitude or number of contribution for a specific attribute.
+
+It is common for offense rules to email a notification as a response. 
+
+There are 5 groups of tests available for Offense Rules:
+
+ 
+Special case: the negative tests
+
+The negative tests are monitoring the absence of events, so they are not activated by an incoming event, but rather when an event is not seen in a specific interval.
+
+In other words, the rule is triggered when the difference between the event last seen time and the current time exceeds the number of seconds that is configured in the rule, this means that these rules can only run on a timer.
+
+The following rule tests can be triggered individually, but subsequent rule tests in the same rule test stack are not acted upon.
+
+    when the event(s) have not been detected by one or more of these log source types for this many seconds
+    when the event(s) have not been detected by one or more of these log sources for this many seconds
+    when the event(s) have not been detected by one or more of these log source groups for this many seconds
+
+These tests trigger a specific action which is the generation of a new event with the QID 38750074 (category System.Service Disruption) containing the log source ID of the log source that stopped generating events:
+“Log source source name (source IP) has stopped emitting events”.
+
+ 
+Rules Global and Local
+
+When you start creating a rule, one of the first parameters requested is the application perimeter of the rule.
+
+You have two options: Local and Global
+
+Local rules evaluate the tests against the local appliance (each processor component individually). This is the default action.
+
+Global rules are meant to be used with stateful rules.
+It means that the CRE on the Console tracks the events matching on each managed host in the deployment. Each time a processor makes a partial match, the event is sent to the Console for full match processing.
+This implies that the console is consuming more resources and more bandwidth is used between Console and Managed Hosts.
+
+Let's take an example:
+Apply Excessive Login Failures on events which are detected by the xxxx system
+and when the event category for the event is one of the following Authentication.User Login Failure
+and when BB:CategoryDefinition: Authentication Failures match at least 5 times with the same Source Address, Destination Address in 5 minutes
+
+
+--> If the rule is set to "Local", the 5 events must trigger on the same event processor. 
+--> If the rule is set to "Global", it doesn't matter that 3 events are seen on one event processor and 2 are observed on another one.
+
+Global rules can be used for use cases such as "Impossible travel authentication", "Shared account", etc.
+
+For local rules, the responses are generated by the processor detecting the behaviour.
+For global rules, the responses are generated by the console.
+ 
+Rule Actions and Responses
+
+Rule Actions and Responses are triggered when all the tests of a rule are true.
+Rule Action
+
+Rule Actions can affect magnitude, add received events (or flows) to an offense, add an annotation in the event (like in magnitude adjustment rules) or stop the correlation of the event.
+
+
+The Rule Action is the action taken on the first event or flow that triggers the rule. 
+
+For example, if a rule is checking for an event occurring with the same Source IP 5 times in a period of time, the Rule Action happens on the 5th event, but not on the 4th.
+
+Example with the following rule:
+
+And the events I triggered
+
+The action (here the creation of an offense) is triggered from the 5th event (in case of an offense, all the events will be added retroactively a few minutes after its creation).
+Indexing
+
+The index is the parameter that will determine the value that will be the central point of an offense and an investigation.
+As an example, all the rules that have an index based on source IP will feed the same offense as long as the source IP is the same value.
+
+
+Example:
+
+Rule 1 is set to index on Source IP and matches on 192.0.2.10 with the Username root
+Rule 2 is set to index on Source IP and matches on 192.0.2.10 and 192.0.2.12 with the Username root
+Rule 3 is set to index on Username and 192.0.2.10 with the Username root
+
+--> Offense 1 is indexed 192.0.2.10 and contains events matching this IP in Rule 1 and Rule 2
+--> Offense 2 is indexed on 192.0.2.12 and contains events matching this IP in Rule 2
+--> Offense 3 is indexed on root and contains event matching this Username in Rule 3
+
+Choosing the right index can be a tricky task. It is going to affect the number of offenses are going to be opened, as well as the time analysts will spend on their investigations. The investigation is actually the parameter that should be kept in mind when choosing the index property.
+
+
+There is no "one rule" to find the right index. In many cases, you will find it in your rule.
+Let me explain:
+
+If you are monitoring for a single username authenticating on 5 different machines, it makes sense to open 1 offense to capture all the activity from that single user on all the machines in the same place.
+
+Another index might result in the creation of 5 different offenses (or way more), making one analyst doing an investigation 5 times or multiple analysts work on the same incident in parallel without knowing it.  
+
+
+It is not as simple for stateless rules, you need to take another perspective to find the right index.
+
+So let’s imagine that you have multiple rules, each tracking a single event, all on the same device type... You need to find the right pivot, it is the common property to all the investigations triggered by these alerts. 
+
+As an example, if you have 5 different rules monitoring suspicious commands or scanning behaviour executed on Linux endpoints, all these rules will trigger an investigation related to the endpoint itself. So, it might be a good idea to group all these suspicious events into a single offense. The Machine Identifier seems to be a good Index to open an offense.
+Rule Response
+
+The Rule Response is by default applied to all the events or flows that matched the rule.
+Many actions can be taken as part of the rule response such as generating new events, sending notifications, or managing information in Reference Data.
+
+
+Note: “Annotate the detected Offense” is the only response available for Offense Rules
+You can refer to the documentation (here) for a description of all the different responses QRadar can take, but I will still talk about the trickiest ones here.
+
+Dispatch New Event
+
+It is possible to create a new event as Rule Response.
+For example, when QRadar detects Firewall Deny events 1,000 times, it generates a new event called Scan Detected.
+
+Let me bring another example where each field contains different information so we can track it in the Offenses UI
+
+
+With these settings, the Offense description hasn’t been modified, it is made from the received event:
+
+In the "Last 10 Events" section, we see that a new Event has been created with the name and description we specified in the rule response
+
+And new annotations have been added:
+
+Then you have some options to affect the offense naming (totally, partially or not at all).
+
+In our example I decided to only contribute to the name of the offense, which means that the original description will be preserved, and my content will be added to it:
+
+Response Limiter
+
+The response limiter is used to limit the number of rule responses a rule will trigger for a particular "object" (an IP, a username, etc).
+
+The response limiter applies a limit on the "Rule Response" section only, it doesn't apply to the "Rule Action" section.
+This means that an offense will include all the detected events (if the box is checked), but the CRE will only generate one extra event every hour per username having a bad behaviour.
+
+In most cases the response limiter property that you will choose will follow the same logic as the one you would use for the Offense indexing, but it doesn't have to.
+
+It is recommended to use the response limiter to avoid flooding when sending email or any other notification response type.
+  
+
+Rules updates
+
+If you are working with content extensions provided by IBM on the App Exchange, there is one or two things you need to know about the methods used to update the rules. 
+
+A protection mechanism is part of the rules update process to avoid overriding the changes that you are making to make the content fit your needs (renaming the rule, updating the description, filtering false-positives, changing the responses, etc). 
+
+In the Rules UI, there is a column that shows the "Origin" of a rule. The values of this column can be: System, User or Modified.
+Here is what they mean:
+
+    System: These rules are provided by IBM. They are being updated during QRadar upgrade or when you are installing content extensions.
+    User: These rules are created by you. IBM doesn't touch the content of these rules.
+    Modified: These rules have originally been provided by IBM but have been modified on your side.
+
+So, System and User rules are pretty straight forward, but I would like to come back to the case of Modified rules.
+
+As I mentioned earlier, when a rule gets modified by you IBM doesn't want to interfere with the tuning you have applied.
+What happens then, when you save a rule that has been provided by IBM, the original version is copied and hidden, and what you are updating is only the copy of the rule.
+This means that all the updates from IBM are applied to the rule that is hidden, all your changes are applied to your copy, and that you can revert to the IBM's latest version at any time by clicking the button "Revert Rule".
+
+
+ 
+Best practices when writing rules
+
+In order to build efficient rules, you must try to reduce the scope of events and flow tested, and short-circuit the series of tests the sooner possible with fast wide checks.
+
+Each test included in a rule will give a result that can be either positive or negative.
+When a negative result is encountered, QRadar will not execute any further rule conditions thus, utilizing less CPU to process events, that is the "circuit" part.
+
+test1 and test2
+The CRE only executes test2 if test1 evaluates to true
+
+not test1 and test2
+The CRE only executes test2 if test1 evaluates to false
+
+test1 and not test2 and test3
+The CRE only executes test2 if test1 evaluates to true
+The CRE only executes test3 if test1 evaluates to true and test2 to false
+
+Each test will also have a different timing execution, that's where the "fast wide checks" will make sense
+
+1 - Numerical tests are faster than all the others:
+
+    Boolean
+    Equality
+    Greater-than
+    Less-than
+
+2 - Then come the alphanumerical comparisons
+
+    Equality
+    Subset
+
+In general, building blocks and custom properties, are good tests to use to determine if QRadar should proceed forward with the rule or not as the information becomes the simple Boolean test or the information is cached in memory.
+
+3 - Reference Data can be low or medium resources consumers, depending on the number of data stored and the events tested against them.
+
+4 - Payload match and regexes are the most expensive, the best practice is to filter the maximum in the previous filters to limit the number of events or flows to test against them.
+
+Note: AQL filters can be as fast and as slow as the "regular" filters, both types follow the same rules. 
+Tests cheat sheet
+Fast tests
+
+    Building Blocks
+    Normalized Properties
+    Identity Information
+        Identity username
+        Identity IP
+        Identity Host Name
+        Identity MAC
+        Identity Group Name
+        Identity Extended Field
+        Identity NetBios Name
+    Additional Information
+        Protocol
+        Log Source
+    Event Information
+        Event Name
+        Username
+        Relevance
+        Severity
+        Credibility
+        Event Category
+        Log Source Time
+    Source and Destination Information
+        Source IP
+        Destination IP
+        Source Port
+        Destination Port
+        Source MAC
+        Destination MAC
+        Source IPv6
+        Destination IPv6
+        Pre NAT Source IP
+        Pre NAT Source Port
+        Post NAT Source Port
+        Post NAT Source IP
+        Pre NAT Destination IP
+        Pre NAT Destination Port
+        Post NAT Destination IP
+        Post NAT Destination Port
+    Custom Properties
+        Numerical tests are faster than all the others.
+            Boolean
+            Equality
+            Greater-than
+            Less-than
+        Then come the alphanumerical comparisons
+            Equality
+            Subset
+
+ 
+Medium tests
+
+Medium test are not good or bad per se, they depend on the context of utilization.
+
+An AQL function can be very fast if you are testing a source IP, can be very bad if you are using the Lookup function with no additional filtering before.
+Reference Data can be very cheap tests, if the scope is limited either in the amount of data tested by the rule or the amount included in the reference data.
+
+    AQL tests
+    Reference Data
+
+Example of efficient tests:
+qid=65465477
+username='Unicorn'
+MyFavoriteCounterCP>69
+
+Example of inefficient tests:
+STR(username) ilike 'Unicorn' -> ilike instead of a simple comparison
+LONG(SUBSTRING(UTF8(payload),12, 18, ))>69 -> parsing in AQL filter instead of using a Custom Property
+ 
+Slow tests
+
+    Payload contains
+    Match (regular expression)
+
+If you are interested in reading more about QRadar Security Content, you can find the complete list of blog entries here.
+
+
+

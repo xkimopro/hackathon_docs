@@ -1,0 +1,241 @@
+id,plugin,name,description,tactic,technique_id,technique_name
+0df4d46e-e202-4b29-9a19-c2540982002d,gameboard,GameBoard Plugin Manual Detection - GUID,GameBoard plugin guid detection placeholder ability,verification,x,x
+4a9b51ba-1a0d-4128-a040-5535fd147dc3,gameboard,GameBoard Plugin Manual Detection - PID,GameBoard plugin pid detection placeholder ability,verification,x,x
+2f34977d-9558-4c12-abad-349716777c6b,sandcat,Sandcat,"Caldera's default agent, written in GoLang. Communicates through the HTTP(S) contact by default.",command-and-control,T1105,Ingress Tool Transfer
+e846973a-767b-4f9c-8b9e-5249cfcd7b97,response,Restore File Backup,Restore backups of files if file has been modified,response,x,x
+5ec7ae3b-c909-41bb-9b6b-dadec409cd40,response,Delete known suspicious files,"Use hash of known suspicious file to find instances of said file, and delete instances",response,x,x
+bf01fdc9-d801-4461-81df-e511efb3c1fc,response,Restore Modified Sensitive Directory,Restore sensitive directories with their backups if they have been modified,response,x,x
+13d0d9cf-e31a-47b6-9217-f38e3f7c25ef,response,System Information from GUID,Collect system information from Sysmon event log given ProcessGUID. Ability timeout may need to be increased depending on Sysmon log size.,response,x,Query Event Logs
+0fccf23f-6b1a-4ef3-8c89-e8bf27a1858f,response,Collect Grandchild Processes,Collect grandchild processes from Sysmon logs,response,x,Query Event Logs
+2ca64acd-dc12-4cc8-b78a-6a182508a50b,response,Inoculate C2,Reroute suspicious IP addresses to localhost by editing hosts file,response,x,x
+f5fb8bce-4a79-466a-8187-ed0cd8e8dbe1,response,Collect Child Processes,Collect child processes from Sysmon logs,response,x,Query Event Logs
+02fb7fa9-8886-4330-9e65-fa7bb1bc5271,response,Kill rogue process,Force kill any unauthorized processes,response,x,x
+cb85039a-6196-4262-883b-0beeb804b83d,response,Enable Outbound TCP/UDP firewall rule,Blocks outbound TCP and UDP traffic on a specific port,response,T1065,Uncommonly Used Port
+debd322d-2100-45f7-8832-29ef7c56786d,response,Enable Inbound TCP/UDP firewall rule,Blocks inbound TCP and UDP traffic on a specific port,response,T1065,Uncommonly Used Port
+32e563bb-ba06-4bcc-b817-fc2c434c0b66,response,Remove Unauthorized Cron Job,Removes newly added cron jobs,response,x,x
+4744d99f-5fea-42a8-8ec4-c228db57caea,response,Remove Unauthorized Scheduled Task,Removes newly added scheduled tasks,response,x,x
+2331077e-7be9-4e89-b2bb-32e8d7f6a708,response,Collect Parent's Child Proccesses,Collect all process creation events with the given parent process GUID,response,x,Query Event Logs
+90418255-b202-4fc3-b0ea-b105bff39ca5,response,Collect GUID from PID,Collect process GUIDs by querying Sysmon for all events associated with the given PID,response,x,Query Event Logs
+2ed3c315-2022-499e-a844-1bbd119d0abe,response,Hash Sensitive Directories,Acquire hashes of compressed sensitive directories as a baseline to check if they are changed in the future,setup,x,x
+622e4bda-e5a8-42bb-93d9-a7b1eebc7e41,response,Backup Bash Profiles,"If bash profile doesn't exist, create it, and then backup each profile.",setup,x,x
+243053d2-13c1-47f0-832d-6ef02ba95e1a,response,Backup Sensitive Directories,Create compressed backups of sensitive directories,setup,x,x
+df9d2b83-b40f-4167-af75-31ddde59af7e,response,Hash Bash Profiles,"If bash profile doesn't exist, create it, and then hash each profile.",setup,x,x
+a65a62e1-b8c0-4f88-b564-166e7499d560,response,Scheduled Tasks Baseline,Capture the scheduled tasks that exist at the start of the operation,setup,x,x
+ba907d7a-b334-47e7-b652-4e481b5aa534,response,User Cron Jobs Baseline,Capture the cron jobs that exist at the start of the operation,setup,x,x
+83d7cf63-e10a-4615-a92e-dce257bf3b9d,response,Backup Powershell Profiles,"This ability creates backups of Powershell profiles, creating the profiles themselves if they do not exist.",setup,x,x
+f313a0d7-2327-4f69-8da4-a6efd6135121,response,Hash Sensitive Files,Acquire hashes of sensitive files as a baseline to check if they are changed in the future,setup,x,x
+90a67a85-e81c-4525-8bae-12a2c5787d9a,response,Hash Powershell Profiles,"This ability creates file hashes of Powershell profiles, creating the profiles themselves if they do not exist.",setup,x,x
+34bc0116-13b6-4dd5-b681-9554c2a1fa95,response,Backup Sensitive Files,Backup sensitive files to temp directory in case these files are maliciously modified,setup,x,x
+bf565e6a-0037-4aa4-852f-1afa222c76db,response,Search for Child Processes (elastic),Search for Sysmon Event 1 records to discover children of known processes.,hunt,x,x
+b419604e-6f82-40a4-b215-12f8c8156c2f,response,Search for Parent Processes (elastic),Search for Sysmon Event 1 records to discover parents of known processes.,hunt,x,x
+4b283acc-45c0-4de8-b0ac-ac0699e5ab95,response,Search for PowerShell ExecutionPolicy Bypass (elastic),"Search for Sysmon Event 1 powershell records with ""ExecutionPolicy"" and ""Bypass""",hunt,x,x
+1837b43e-4fff-46b2-a604-a602f7540469,response,Elasticat,A Blue Python agent that executes elasticsearch queries.,command-and-control,T1071,Standard Application Layer Protocol
+f9b3eff0-e11c-48de-9338-1578b351b14b,response,Hunt for known suspicious files,Use hash of known suspicious file to find instances of said file on hosts,hunt,x,x
+ee54384f-cfbc-4228-9dc1-cc5632307afb,response,New Cron Jobs,Checks to see if a new (unauthorized) cron job has been added,detection,x,x
+1226f8ec-e2e5-4311-88e7-378c0e5cc7ce,response,Suspicious URLs in mail,Finds suspicious URLs in received mail,detection,x,x
+930236c2-5397-4868-8c7b-72e294a5a376,response,Modified Sensitive Files,Checks sensitive file hashes against previously stored hashes to determine if the file has been modified,detection,x,x
+3b4640bc-eacb-407a-a997-105e39788781,response,Find unauthorized processes,Search for processes which should not be on the host,detection,x,x
+8bc73098-54d1-4f69-abd5-271e3e2da5df,response,New Scheduled Tasks,Checks to see if a new (unauthorized) scheduled task has been added,detection,x,x
+77272c88-ccf5-4225-a3d9-f9e171d1ca5b,response,Acquire suspicious files,Get information from AV about suspicious files,detection,x,x
+1b4aa8d5-ba97-4b9b-92a3-eaaaffbfdf0a,response,Find atypical open ports,Compare open ports against a known baseline,detection,T1065,Uncommonly Used Port
+9bc10f37-0853-4d73-b547-019c11eda22f,response,Modified Sensitive Directory,Checks sensitive directory hashes against previously stored hashes to determine if the directory has been modified,detection,x,x
+6d53c4a8-ecd3-4131-a7a2-704a5b43dd83,training,Create Process on Unauthorized Port,Certification ability to create a listening process on an unauthorized port,training,x,x
+586140a1-9755-4996-883d-82a17c7737b2,training,Pretend Malicious File,Create a pretend malicious file to be acted on,training,x,x
+fc4715ac-758e-4ba9-9e52-d07ff3d22a74,training,Add New Cronjob/Scheduled Task,Certification ability to create a new cronjob or scheduled task,training,x,x
+18702cd3-8e98-4eb7-99d4-0d2816926af1,training,Modify Bash/Powershell Profile,Add a line to the Bash or Powershell profile,training,x,x
+f0d77555-fa79-4884-8afd-73d39f887879,training,Pretend Malicious Mail,Send an email with a pretend evil domain to be acted on,training,x,x
+e13c4e45-d19f-440e-8a72-fad728a1789c,training,Delete Pretend Malicious Mail,Delete previously stored pretend malicious mail,training,x,x
+356d1722-7784-40c4-822b-0cf864b0b36d,manx,Manx,A reverse-shell agent which communicates via the TCP contact,command-and-control,T1105,Ingress Tool Transfer
+567eaaba-94cc-4a27-83f8-768e5638f4e1,access,NMAP scan,Scan an external host for open ports and services,technical-information-gathering,T1254,Conduct active scanning
+bed8f28e-c0ed-463e-9e31-d5607e5473df,access,Load Metasploit Abilities,Load Metasploit Abilities,build-capabilities,T1349,Build or acquire exploits
+6469befa-748a-4b9c-a96d-f191fde47d89,stockpile,Create staging directory,create a directory for exfil staging,collection,T1074.001,Data Staged: Local Data Staging
+b007fe0c-c6b0-4fda-915c-255bbc070de2,stockpile,Copy Clipboard,copy the contents for the clipboard and print them,collection,T1115,Clipboard Data
+89955f55-529d-4d58-bed4-fed9e42515ec,stockpile,cURL socket address,See the raw content of a socket,collection,T1005,Data from Local System
+720a3356-eee1-4015-9135-0fc08f7eb2d5,stockpile,Find Git Repositories,This ability will locate directories that are cloned Git repositories.,collection,T1005,Data from Local System
+94f21386-9547-43c4-99df-938ab05d45ce,stockpile,WMIC Process Enumeration,"Capture process id, executable path, pid and parent pid before writing to disk",collection,T1047,WMIC
+d69e8660-62c9-431e-87eb-8cf6bd4e35cf,stockpile,Find IP addresses,Grep for IP addresses in file system per user,collection,T1005,Data from Local System
+316251ed-6a28-4013-812b-ddf5b5b007f8,stockpile,Screen Capture,capture the contents of the screen,collection,T1113,Screen Capture
+1f7ff232-ebf8-42bf-a3c4-657855794cfe,stockpile,Find company emails,Grep for all emails for the given target company,collection,T1005,Data from Local System
+02de522f-7e0a-4544-8afc-0c195f400f5f,stockpile,Parse SSH config,Search for valid SSH commands in the config file,collection,T1005,Data from Local System
+702bfdd2-9947-4eda-b551-c3a1ea9a59a2,stockpile,PowerShell information gathering,System Information Gathering Script,collection,T1059.001,Command and Scripting Interpreter: PowerShell
+10fad81e-3f68-47be-83b6-fbee7711c6a9,stockpile,Advanced File Search and Stager,"Highly configurable file finder and stager for Linux and Windows. Drops a payload file to the host to parse
+arguments rather than running multiple commands for each fact (e.g., each file type). This ability allows for a safe
+mode, only staging files found that have the appropriate file ending. The staging directory is configurable but
+defaults to the current user's Recycle Bin (Windows) and /tmp (Linux). Payload files include default values for all
+parameters (matching the base fact source - File Search and Stage). Options for searches: file extensions (include,
+exclude [windows]), directories (include, exclude), accessed date cutoff, modified date cutoff, sensitive search
+strings in files or titles.
+",collection,T1119,Automated Collection
+cc191baa-7472-4386-a2f4-42f203f1acfd,stockpile,SysInternals PSTool Process Discovery,Process discovery via SysInternals pstool,collection,T1057,Process Discovery
+90c2efaa-8205-480d-8bb6-61d90dbaf81b,stockpile,Find files,Locate files deemed sensitive,collection,T1005,Data from Local System
+30a8cf10-73dc-497c-8261-a64cc9e91505,stockpile,Compress staged directory (Password Protected),This ability packages staged files into a password-protected archive. Note - Requires 7Z for Windows and GPG version 2.1+ for Linux,collection,T1560.001,Archive Collected Data: Archive via Utility
+55678719-e76e-4df9-92aa-10655bbd1cf4,stockpile,cmd.exe information gathering,User enumeration,collection,T1059.001,Command and Scripting Interpreter: PowerShell
+4e97e699-93d7-4040-b5a3-2e906a58199e,stockpile,Stage sensitive files,copy files to staging directory,collection,T1074.001,Data Staged: Local Data Staging
+2f90d4de-2612-4468-9251-b220e3727452,stockpile,Compress Git Repository,This ability will compress a given git repository.,exfiltration,T1560.001,Archive Collected Data: Archive via Utility
+ba0deadb-97ac-4a4c-aa81-21912fc90980,stockpile,Transfer Compressed Archive to Separate S3 Bucket via AWS CLI,"Transfer the compressed archive from one S3 bucket to another S3 bucket via AWS CLI. It is assumed that the proper
+policies and security rules are in place to allow reading from the source bucket and writing to the destination
+bucket.
+",exfiltration,T1537,Transfer Data to Cloud Account
+dd4d3d6f-be0a-4d80-ada2-0b7f3228d2dc,stockpile,Exfil Compressed Archive to S3 via Golang,"Use the AWS SDK for GoLang to upload the compressed archive to the provided S3 bucket.
+It is assumed that the current user credentials have the proper permissions to write to the target S3 bucket.
+Requires the agent to be compiled with the native_aws extension.
+Timeout set to 45 seconds.
+",exfiltration,T1567.002,Exfiltration to Cloud Storage
+300157e5-f4ad-4569-b533-9d1fa0e74d74,stockpile,Compress staged directory,Compress a directory on the file system,exfiltration,T1560.001,Archive Collected Data: Archive via Utility
+110cea7a-5b03-4443-92ee-7ccefaead451,stockpile,Scheduled Exfiltration,This ability exfiltrates the staged directory at a scheduled time.,exfiltration,T1029,Scheduled Transfer
+d754878c-17dd-46dc-891c-a993f8a10336,stockpile,Exfil Compressed Archive to FTP Server,This ability exfiltrates a compressed archive to an FTP server.,exfiltration,T1048.003,Exfiltration Over Unencrypted/Obfuscated Non-C2 Protocol
+a201bec2-a193-4b58-bf0e-57fa621da474,stockpile,Exfil Directory Files to GitHub,"This ability will exfiltrate all files in a set staged directory to a repository in GitHub.
+",exfiltration,T1567.001,Exfiltration to Code Repository
+ea713bc4-63f0-491c-9a6f-0b01d560b87e,stockpile,Exfil staged directory,Exfil the staged directory,exfiltration,T1041,Exfiltration Over C2 Channel
+0582dc26-e0cf-4645-88cf-f37a02279976,stockpile,Exfil Compressed Archive to Github Gist,"This ability exfiltrates a compressed archive to Github Gists (Base64 Encoded). To reconstitute, save
+the base64 string from the Gist and run ----
+(Powershell) [Convert]::FromBase64String($(Get-Content b64.txt)) | set-content archive.extension -encoding byte ----
+(Linux) cat b64.txt | base64 -d > archive.extension
+",exfiltration,T1567.001,Exfiltration to Code Repository
+4a1120a5-971c-457f-bb07-60641b4723fd,stockpile,Exfil Compressed Archive to Github Repository,This will exfiltrate a given compressed directory to a GitHub repository. It assumes that all the facts supplied are valid.,exfiltration,T1567.001,Exfiltration to Code Repository
+3ce95a28-25fc-4a7e-a0cd-0fdb190e2081,stockpile,Exfil Compressed Archive to Dropbox,This will exfiltrate an archive to Dropbox.,exfiltration,T1567.002,Exfiltration to Cloud Storage
+5c5b0392-1daa-45e1-967c-2f361ce78849,stockpile,Compress Staged Directory (Password Protected) and Split Into Smaller Chunks,"This ability will compress the staged files into a password protected archive and break it
+into smaller chunks based on the given byte size. The original archive will be automatically
+deleted. Use this instead of other archiving abilities if small file sizes for exfiltration 
+are desired. When used with an exfiltration ability, the exfiltration ability will run numerous
+times in an operation depending on how many chunks are created. 
+",exfiltration,T1030,Data Transfer Size Limits
+e7bf5dc7-62e4-48b2-acf8-abaf8734c19c,stockpile,Exfil Compressed Archive to S3 via AWS CLI,"Exfiltrate the compressed archive to the provided S3 bucket using the AWS CLI. It is assumed that the user
+credentials configured with AWS CLI have the proper permissions to write to the target S3 bucket.
+",exfiltration,T1567.002,Exfiltration to Cloud Storage
+831d5b9d-7867-4bca-98f5-bc235445614c,stockpile,Create persistence cron job for current user,"After target host is rebooted, it will automatically reach out to the caldera server to download and execute the caldera agent, creating persistent access after reboot.",persistence,,
+52771610-2322-44cf-816b-a7df42b4c086,stockpile,Replace a service binary with alternate binary,"This is an example technique. snmptrap.exe should be changed in the command
+below with the new desired service binary. Depending on the value of
+host.service.modifiable this ability can damage the target system.
+",persistence,T1543.003,Create or Modify System Process: Windows Service
+0cd686c7-8d70-434e-a20c-2fc58f51a51a,stockpile,Create persistence cron job for root user (requires sudo),"After target host is rebooted, it will automatically reach out to the caldera server to download and execute the caldera agent, creating persistent root access after reboot.",persistence,,
+98e58fc4-3843-4511-89b1-50cb872e0c9b,stockpile,Credentials in Registry - HKLM,Search for possible credentials stored in the HKLM Hive,credential-access,T1552.002,Unsecured Credentials: Credentials in Registry
+1b4fb81c-8090-426c-93ab-0a633e7a16a7,stockpile,Sniff network traffic,Perform a packet capture,credential-access,T1040,Network Sniffing
+422526ec-27e9-429a-995b-c686a29561a4,stockpile,Dump history,Get contents of bash history,credential-access,T1552.003,Unsecured Credentials: Bash History
+c9f2c7ae-0092-4ea0-b9ae-92014eba7ce7,stockpile,Inject Cred dumper into process (Spookier),Injects cred dumper exe into an available process,credential-access,T1055.002,Process Injection: Portable Executable Injection
+3c647015-ab0a-496a-8847-6ab173cd2b22,stockpile,MiniDumpWriteDump (Spooky),Custom GO credential dumper using minidumpwritedump,credential-access,T1003,OS Credential Dumping
+baac2c6d-4652-4b7e-ab0a-f1bf246edd12,stockpile,Run PowerKatz,Use powerkatz to execute mimikatz and attempt to grab plaintext and/or hashed passwords,credential-access,T1003.001,OS Credential Dumping: LSASS Memory
+de632c2d-a729-4b77-b781-6a6b09c148ba,stockpile,Find private keys,Find private keys on the file system,credential-access,T1552.004,Unsecured Credentials: Private Keys
+7049e3ec-b822-4fdf-a4ac-18190f9b66d1,stockpile,Powerkatz (Staged),Use Invoke-Mimikatz,credential-access,T1003.001,OS Credential Dumping: LSASS Memory
+0ef4cc7b-611c-4237-b20b-db36b6906554,stockpile,Leverage Procdump for lsass memory,Dump lsass for later use with mimikatz,credential-access,T1003.001,OS Credential Dumping: LSASS Memory
+3aad5312-d48b-4206-9de4-39866c12e60f,stockpile,Credentials in Registry - HKCU,Search for possible credentials stored in Registry,credential-access,T1552.002,Unsecured Credentials: Credentials in Registry
+eb814e03-811a-467a-bc6d-dcd453750fa2,stockpile,Install PSTools,Download and install PSTools by unzipping the file,command-and-control,T1105,Ingress Tool Transfer
+0ab383be-b819-41bf-91b9-1bd4404d83bf,stockpile,Ragdoll,A Python agent which communicates via the HTML contact,command-and-control,T1071.001,Application Layer Protocol: Web Protocols
+60f63260-39bb-4136-87a0-b6c2dca799fc,stockpile,Install PowerShell Core 6,"Download, install and start new process under PowerShell Core 6",command-and-control,T1105,Ingress Tool Transfer
+4cd4eb44-29a7-4259-91ae-e457b283a880,stockpile,Delete payload,Remove a downloaded payload file,defense-evasion,T1070.004,Indicator Removal on Host: File Deletion
+36eecb80-ede3-442b-8774-956e906aff02,stockpile,1-min sleep,Pause all operations to avoid making noise,defense-evasion,T1497.003,Virtualization/Sandbox Evasion: Time Based Evasion
+e5bcefee-262d-4568-a261-e8a20855ec81,stockpile,Signed Binary Execution - Mavinject,Leverage Mavinject (signed binary) for DLL injection,defense-evasion,T1055.002,Process Injection: Portable Executable Injection
+a74bc239-a196-4f7e-8d5c-fe8c0266071c,stockpile,Signed Binary Execution - odbcconf,Leverage odbcconf for DLL injection,defense-evasion,T1055.001,Process Injection: Dynamic-link Library Injection
+49470433-30ce-4714-a44b-bea9dbbeca9a,stockpile,Disable Windows Defender Real-Time Protection,Disable Windows Defender Real-Time Protection,defense-evasion,T1562.001,Impair Defenses: Disable or Modify Tools
+fcf71ee3-d1a9-4136-b919-9e5f6da43608,stockpile,Clear Logs,Clear Sysmon logs [intended to trigger CAR-2016-04-002],defense-evasion,T1070.001,Indicator Removal on Host: Clear Windows Event Logs
+b007f6e8-4a87-4440-8888-29ceab047d9b,stockpile,Disable Windows Defender All,Disable Windows Defender All,defense-evasion,T1562.001,Impair Defenses: Disable or Modify Tools
+43b3754c-def4-4699-a673-1d85648fda6a,stockpile,Avoid logs,Stop terminal from logging history,defense-evasion,T1070.003,Indicator Removal on Host: Clear Command History
+1258b063-27d6-489b-a677-4807faacf868,stockpile,Check Security Services,Check for security services. Security service list is based on the SUNBURST malware observed in a Solarwinds related compromise (https://research.checkpoint.com/2020/sunburst-teardrop-and-the-netsec-new-normal/).,defense-evasion,T1497.001,Virtualization/Sandbox Evasion: System Checks
+7a6ba833-de40-466a-8969-5c37b13603e0,stockpile,Check analysis environment processes,Check for analysis/sandbox environment processes. Process black list is based on the SUNBURST malware observed in a Solarwinds related compromise (https://research.checkpoint.com/2020/sunburst-teardrop-and-the-netsec-new-normal/).,defense-evasion,T1497.001,Virtualization/Sandbox Evasion: System Checks
+5f844ac9-5f24-4196-a70d-17f0bd44a934,stockpile,Deadman - Delete agent file,Deadman ability to delete agent file after termination.,defense-evasion,T1070.004,Indicator Removal on Host: File Deletion
+e5f9de8f-3df1-4e78-ad92-a784e3f6770d,stockpile,Move Powershell & triage,Copy powershell to non-standard location and perform triage commands,defense-evasion,T1059.001,PowerShell
+a42dfc86-12f0-4f06-b0cf-24830c7f61f4,stockpile,Spawn calculator (shellcode),Start a new calculator process,defense-evasion,T1055,Process Injection
+a398986f-31b0-436a-87e9-c8e82c028f3c,stockpile,Inject Sandcat into process,Injects sandcat DLL into an available process,defense-evasion,T1055.002,Process Injection: Portable Executable Injection
+3864fd22-5c63-41c9-bdbc-a66b5ffa3f5e,stockpile,Bypass ExecutionPolicy,Ensure the ExecutionPolicy is turned to Bypass,defense-evasion,T1562.001,Impair Defenses: Disable or Modify Tools
+665432a4-42e7-4ee1-af19-a9a8c9455d0c,stockpile,UAC bypass registry,Set a registry key to allow UAC bypass,privilege-escalation,T1548.002,Abuse Elevation Control Mechanism: Bypass User Access Control
+e3db134c-4aed-4c5a-9607-c50183c9ef9e,stockpile,Bypass UAC Medium,Bypass user account controls - medium,privilege-escalation,T1548.002,Abuse Elevation Control Mechanism: Bypass User Access Control
+10681f2f-be03-44af-858d-f2b0812df185,stockpile,Weak executable files,Locate and infect files with weak but executable perms,privilege-escalation,T1574.010,Hijack Execution Flow: Services File Permissions Weakness
+cc5fa0d8-6e41-432b-a74a-d7cfc6c35d8f,stockpile,SUID Find & Exploit,Finds all SUID binaries and executes relevant cmds,privilege-escalation,,
+e99cce5c-cb7e-4a6e-8a09-1609a221b90a,stockpile,duser/osksupport DLL Hijack,UIPI bypass with uiAccess application,privilege-escalation,T1548.002,Abuse Elevation Control Mechanism: Bypass User Access Control
+7f6ea111-1528-4bf7-9ae1-3ee9c3eb3218,stockpile,Abuse Linux Capability: Python3,Use python3 to pull down Caldera agent as root,privilege-escalation,,
+b7344901-0b02-4ead-baf6-e3f629ed545f,stockpile,Slui File Handler Hijack,executes the slui exe file handler hijack,privilege-escalation,T1548.002,Abuse Elevation Control Mechanism: Bypass User Access Control
+95ad5d69-563e-477b-802b-4855bfb3be09,stockpile,wow64log DLL Hijack,Dll Hijack of WOW64 logger wow64log.dll using Akagi.exe,privilege-escalation,T1548.002,Abuse Elevation Control Mechanism: Bypass User Access Control
+134b49a3-3f93-41bd-85f4-563eadbb6055,stockpile,Stop PowerShell processes,Kill all PowerShell processes,execution,T1059.001,Command and Scripting Interpreter: PowerShell
+bfff9006-d1fb-46ce-b173-92cb04e9a031,stockpile,PowerShell bitly Link Download,Download,execution,T1059.001,Command and Scripting Interpreter: PowerShell
+ece5dde3-d370-4c20-b213-a1f424aa8d03,stockpile,Start 54ndc47 (WMI),Remotely executes 54ndc47 over WMI,execution,T1047,Windows Management Instrumentation
+315cedf1-4a3a-4015-b63f-149d64bacbbc,stockpile,Emulate Administrator Tasks,Emulate administrator tasks on a system in a separate process,execution,T1059.001,Command and Scripting Interpreter: PowerShell
+3796a00b-b11d-4731-b4ca-275a07d83299,stockpile,Impersonate user,Run an application as a different user,execution,T1059.001,Command and Scripting Interpreter: PowerShell
+95727b87-175c-4a69-8c7a-a5d82746a753,stockpile,Service Creation,"Create a service named ""sandsvc"" to execute remote 54ndc57 binary named ""s4ndc4t.exe""",execution,T1569.002,System Services: Service Execution
+b1d41972-3ad9-4aa1-8f7f-05f049a2980e,stockpile,Start 54ndc47,Start a new 54ndc47 agent in background,execution,T1059.004,Command and Scripting Interpreter: Unix Shell
+de52784d-4de6-4d4e-b79e-e7b68fe037fb,stockpile,Add bookmark,Add a malicous bookmark which looks like a current one,execution,T1059.002,Command and Scripting Interpreter: AppleScript
+ccdb8caf-c69e-424b-b930-551969450c57,stockpile,PowerShell Invoke MimiKats,Download,execution,T1059.001,Command and Scripting Interpreter: PowerShell
+620b674a-7655-436c-b645-bc3e8ea51abd,stockpile,Copy Sandcat File using PsExec on CMD,Copy Sandcat file using PsExec on CMD,lateral-movement,T1570,Lateral Tool Transfer
+10a9d979-e342-418a-a9b0-002c483e0fa6,stockpile,Start 54ndc47,"Copy 54ndc47 to remote host and start it, assumes target uses SSH keys and passwordless authentication",lateral-movement,T1021.004,Remote Services: SSH
+40161ad0-75bd-11e9-b475-0800200c9a66,stockpile,Net use,Mounts a network file share on a target computer,lateral-movement,T1021.002,Remote Services: SMB/Windows Admin Shares
+96d3c175-5e58-424c-8350-d7514b28a075,stockpile,Lateral Movement - Certutil,Uses CertUtil as a LoL technique to move the .exe agent as a certificate using windows-signed binaries,lateral-movement,,
+aa6ec4dd-db09-4925-b9b9-43adeb154686,stockpile,Mount Share,Mount a windows share,lateral-movement,T1021.002,Remote Services: SMB/Windows Admin Shares
+4908fdc4-74fc-4d7c-8935-26d11ad26a8d,stockpile,Copy 54ndc47 (WinRM and SCP),Copy 54ndc47 to remote host (powershell 5 or newer only) or SCP,lateral-movement,T1570,Lateral Tool Transfer
+22881b9d-0efa-4ef4-9704-df0f11170cc3,stockpile,Lateral Movement - esentutl,Tool transfer to lateral hosts using Alternate Data Streams to hide implant,lateral-movement,,
+41bb2b7a-75af-49fd-bd15-6c827df25921,stockpile,Start Agent (WinRM),Start Agent using WinRM (WinRM),lateral-movement,T1021.006,Remote Services: Windows Remote Management
+65048ec1-f7ca-49d3-9410-10813e472b30,stockpile,Copy 54ndc47 (SMB),Copy 54ndc47 to remote host (SMB),lateral-movement,T1021.002,Remote Services: SMB/Windows Admin Shares
+3734aa1e-c536-42b3-8912-4c91b8bdce90,stockpile,Copy Sandcat File using Powershell,Copy Sandcat file using PowerShell,lateral-movement,T1021.006,Remote Services: Windows Remote Management
+3b007f46-23e7-4a11-9c14-e7085b6a754a,stockpile,Quit Outlook,Quit Outlook,impact,T1489,Service Stop
+2fe2d5e6-7b06-4fc0-bf71-6966a1226731,stockpile,Disrupt WIFI,Turn a computers WIFI off,impact,T1499,Endpoint Denial of Service
+47d08617-5ce1-424a-8cc5-c9c978ce6bf9,stockpile,Leave note,Create a text file for the user to find,impact,T1491,Defacement
+78524da1-f347-4fbb-9295-209f1f408330,stockpile,Record microphone,Install sox and record microphone for n-seconds,impact,T1496,Resource Hijacking
+46da2385-cf37-49cb-ba4b-a739c7a19de4,stockpile,Crypto (Monero) Mining,Download and execute Monero miner (xmrig) for 1 minute,impact,T1496,Resource Hijacking
+68235976-2404-42a8-9105-68230cfef562,stockpile,Invoke-MemeKatz,Downloads random meme and sets as desktop background,impact,T1491,Defacement
+55f9600a-756f-496b-b27f-682052dc429c,stockpile,File Hunter Mission,Hunts for files of a certain extension and inserts a message,impact,T1565.001,Data Manipulation: Stored Data Manipulation
+0821b0b0-7902-4a7b-8052-80bda5a43684,stockpile,Shutdown Target System,Force shutdown a target system using Process Injection and raw shellcode,impact,T1499,Endpoint Denial of Service
+a0676fe1-cd52-482e-8dde-349b73f9aa69,stockpile,Preferred WIFI,See the most used WIFI networks of a machine,discovery,T1016,System Network Configuration Discovery
+530e47c6-8592-42bf-91df-c59ffbd8541b,stockpile,View admin shares,Network Share Discovery,discovery,T1135,Network Share Discovery
+0360ede1-3c28-48d3-a6ef-6e98f562c5af,stockpile,GetComputers (Alice),Get a list of all computers in a domain,discovery,T1018,Remote System Discovery
+fa6e8607-e0b1-425d-8924-9b894da5a002,stockpile,Get System Time,get current system time (ISO 8601),discovery,T1124,System Time Discovery
+e8017c46-acb8-400c-a4b5-b3362b5b5baa,stockpile,Network Interface Configuration,View network configuration info for host,discovery,T1016,System Network Configuration Discovery
+b18e8767-b7ea-41a3-8e80-baf65a5ddef5,stockpile,Check Python,Check to see what version of python is installed,discovery,T1518,Software Discovery
+13379ae1-d20e-4162-91f8-320d78a35e7f,stockpile,Discover local hosts,Use PowerView to query the Active Directory server for a list of computers in the Domain,discovery,T1018,Remote System Discovery
+fa4ed735-7006-4451-a578-b516f80e559f,stockpile,Reverse nslookup IP,Find hostname of remote IP in domain,discovery,T1018,Remote System Discovery
+b007fc38-9eb7-4320-92b3-9a3ad3e6ec25,stockpile,Get Chrome Bookmarks,Get Chrome Bookmarks,discovery,T1217,Browser Bookmark Discovery
+26c8b8b5-7b5b-4de1-a128-7d37fb14f517,stockpile,Discover domain controller,Identify the remote domain controllers,discovery,T1018,Remote System Discovery
+5f77ecf9-613f-4863-8d2f-ed6b447a4633,stockpile,Parse SSH known_hosts,View the known_hosts file,discovery,T1018,Remote System Discovery
+05cda6f6-2b1b-462e-bff1-845af94343f7,stockpile,Discover injectable process,Discovers processes that the current user has the ability to access and selects an injectable one,discovery,T1057,Process Discovery
+c0da588f-79f0-4263-8998-7496b1a40596,stockpile,Identify active user,Find user running agent,discovery,T1033,System Owner/User Discovery
+830bb6ed-9594-4817-b1a1-c298c0f9f425,stockpile,Check Chrome,Check to see if Gooogle Chrome browser is installed,discovery,T1518,Software Discovery
+feaced8f-f43f-452a-9500-a5219488abb8,stockpile,Identify local users,Identify all local users,discovery,T1087.001,Account Discovery: Local Account
+5c65eec8-4839-4713-a4e1-86b2e75d1927,stockpile,Application Window Discovery,"Extracts the names of all open non-explorer windows, and the locations of all explorer windows.",discovery,T1010,Application Window Discovery
+ce485320-41a4-42e8-a510-f5a8fe96a644,stockpile,Discover Mail Server,Identify the organizations mail server,discovery,T1018,Remote System Discovery
+8c06ebf8-bacf-486b-bd77-21ba8c5a5777,stockpile,Identify Firewalls,Identify Firewalls,discovery,T1518.001,Software Discovery: Security Software Discovery
+5a39d7ed-45c9-4a79-b581-e5fb99e24f65,stockpile,System processes,Identify system processes,discovery,T1057,Process Discovery
+c6607391-d02c-44b5-9b13-d3492ca58599,stockpile,Discover system services,Identify system services,discovery,T1007,System Service Discovery
+638fb6bb-ba39-4285-93d1-7e4775b033a8,stockpile,Find System Network Connections,Find System Network Connections,discovery,T1049,System Network Connections Discovery
+5dc841fd-28ad-40e2-b10e-fb007fe09e81,stockpile,Virtual or Real,Determine if the system is virtualized or physical,discovery,T1497.001,Virtualization/Sandbox Evasion: System Checks
+6c91884e-11ec-422f-a6ed-e76774b0daac,stockpile,View printer queue,View details of queued documents in printer queue,discovery,T1120,Peripheral Device Discovery
+7c42a30c-c8c7-44c5-80a8-862d364ac1e4,stockpile,UAC Status,Determine whether or not UAC is enabled,discovery,T1518.001,Software Discovery: Security Software Discovery
+c9be8043-a445-4cbf-b77b-ed7bb007fc7c,stockpile,Internet Explorer Version,Determine the version of Internet Explorer running,discovery,T1518,Software Discovery
+921055f4-5970-4707-909e-62f594234d91,stockpile,Remote Host Ping,Ping a remote host to see if it is accessible,discovery,T1016,System Network Configuration Discovery
+9849d956-37ea-49f2-a8b5-f2ca080b315d,stockpile,Check Go,Check to see if GoLang is installed,discovery,T1518,Software Discovery
+deeac480-5c2a-42b5-90bb-41675ee53c7e,stockpile,View remote shares,View the shares of a remote host,discovery,T1135,Network Share Discovery
+b6b105b9-41dc-490b-bc5c-80d699b82ce8,stockpile,Find OS Version,Find OS Version,discovery,T1082,System Information Discovery
+8adf02e8-6e71-4244-886c-98c402857404,stockpile,tasklist Process Enumeration,Capture running processes and their loaded DLLs,discovery,T1057,Process Discovery
+0093c0e0-68b6-4cab-b0d4-2b40b3c78f71,stockpile,enumerate VMs,Enumerate running virtual machines on hypervisor,discovery,T1057,Process Discovery
+bd527b63-9f9e-46e0-9816-b8434d2b8989,stockpile,Current User,Obtain user from current session,discovery,T1033,System Owner/User Discovery
+47abe1f5-55a5-46cc-8cad-506dac8ea6d9,stockpile,Scan IP for ports,Use dropped scanner to find open popular ports,discovery,T1046,Network Service Scanning
+b6f545ef-f802-4537-b59d-2cb19831c8ed,stockpile,Snag broadcast IP,Capture the local network broadcast IP address,discovery,T1016,System Network Configuration Discovery
+2946edba-54d8-11eb-ae93-0242ac130002,stockpile,Password Policy for a domain,Password Policy Discovery for a domain,discovery,T1201,Password Policy Discovery for a domain
+3a2ce3d5-e9e2-4344-ae23-470432ff8687,stockpile,Fingerprint network services,Uses nmap to fingerprint services that were network accessible,discovery,T1046,Network Service Scanning
+e82f39e2-56f8-4f19-8376-b007f9ac5f8a,stockpile,Password Policy,Password Policy Discovery,discovery,T1201,Password Policy Discovery
+6d90e6fa-9324-4eb5-93be-9f737245bd7z,stockpile,Discover Domain Admins,Use PowerView to query the Active Directory server to determine remote admins,discovery,T1069.002,Permission Groups Discovery: Domain Groups
+74d1b640-7f1e-4b36-beba-23a8228f39e0,stockpile,Local FQDN,Uses windows libraries to get FQDN of infected host,discovery,,
+f1cf4ea1-43f0-4604-9537-3d1b1b2d5b1c,stockpile,GetServiceAccounts,Get Service Accounts for a domain,discovery,T1033,System Owner/User Discovery
+2488245e-bcbd-405d-920e-2de27db882b3,stockpile,Query Registry,Query Registry using PowerShell Get-ItemProperty,discovery,T1012,Query Registry
+29451844-9b76-4e16-a9ee-d6feab4b24db,stockpile,PowerShell version,Discover the PowerShell version,discovery,T1082,System Information Discovery
+c1cd6388-3ced-48c7-a511-0434c6ba8f48,stockpile,Find local users,Get a list of all local users,discovery,T1087.001,Account Discovery: Local Account
+fdf8bf36-797f-4157-805b-fe7c1c6fc903,stockpile,Find Hostname,Find hostname of remote host,discovery,T1018,Remote System Discovery
+0bff4ee7-42a4-4bde-b09a-9d79d8b9edd7,stockpile,Find LSASS,Get process info for LSASS,discovery,T1057,Process Discovery
+6131397e-7765-424e-a594-3d7fb2d93a6a,stockpile,GetDomain,Determine the Windows Domain of a computer,discovery,T1482,Domain Trust Discovery
+aaf34d82-aea9-4278-8ec4-789653e4f5d9,stockpile,GetAdminMembers,Get Administrator users for a computer,discovery,T1033,System Owner/User Discovery
+3b5db901-2cb8-4df7-8043-c4628a6a5d5a,stockpile,Find user processes,Get process info for processes running as a user,discovery,T1057,Process Discovery
+4d9b079c-9ede-4116-8b14-72ad3a5533af,stockpile,PowerShell Process Enumeration,Capture running processes via PowerShell,discovery,T1057,Process Discovery
+9a30740d-3aa8-4c23-8efa-d51215e8a5b9,stockpile,Scan WIFI networks,View all potential WIFI networks on host,discovery,T1016,System Network Configuration Discovery
+52177cc1-b9ab-4411-ac21-2eadc4b5d3b8,stockpile,List Directory,List contents of current directory,discovery,T1083,File and Directory Discovery
+1c353eb4-29ab-4dfe-88ed-f34f5a60848e,stockpile,File and Directory Discovery,Find or discover files on the file system,discovery,T1083,File and Directory Discovery
+85341c8c-4ecb-4579-8f53-43e3e91d7617,stockpile,Collect ARP details,Locate all active IP and FQDNs on the network,discovery,T1018,Remote System Discovery
+a41c2324-8c63-4b15-b3c5-84f920d1f226,stockpile,Locate file from printer queue,Locate file that appears in the printer queue,discovery,T1083,File and Directory Discovery
+ac9dce33-2acc-4b34-94ce-2596409ce8f0,stockpile,Ping network,Ping the network in order to build the ARP cache,discovery,T1016,System Network Configuration Discovery
+6e1a53c0-7352-4899-be35-fa7f364d5722,stockpile,Print Working Directory,Print the current working directory on the system,discovery,T1083,File and Directory Discovery
+9b007f62-daa1-44bd-a57d-00c5315ec6fe,stockpile,USB Connected Device Discovery,find attached usb devices,discovery,T1120,Peripheral Device Discovery
+335cea7b-bec0-48c6-adfb-6066070f5f68,stockpile,View Processes,Display information about current system processes,discovery,T1057,Process Discovery
+364ea817-bbb9-4083-87dd-94b9dba45f6f,stockpile,Account Discovery (targeted),The net utility is executed via cmd to enumerate detailed information about a specific user account.,discovery,T1087.002,Account Discovery: Domain Account
+5a4cb2be-2684-4801-9355-3a90c91e0004,stockpile,Network Service Scanning,Scans the local network for common open ports,discovery,T1046,Network Service Scanning
+c7ec57cd-933e-42b6-99a4-e852a9e57a33,stockpile,Account Discovery (all),The net utility is executed via cmd to enumerate domain user accounts.,discovery,T1087.002,Account Discovery: Domain Account
+30732a56-4a23-4307-9544-09caf2ed29d5,stockpile,Find deletable dirs (per user),Discover all directories containing deletable files by user,discovery,T1082,System Information Discovery
+2dece965-37a0-4f70-a391-0f30e3331aba,stockpile,Discover antivirus programs,Identify AV,discovery,T1518.001,Software Discovery: Security Software Discovery
+14a21534-350f-4d83-9dd7-3c56b93a0c17,stockpile,Find Domain,Find Domain information,discovery,T1016,System Network Configuration Discovery
+5c4dd985-89e3-4590-9b57-71fed66ff4e2,stockpile,Permission Groups Discovery,Summary of permission and security groups,discovery,T1069.001,Permission Groups Discovery: Local Groups
+2afae782-6d0a-4fbd-a6b6-d1ce90090eac,stockpile,Account-type Admin Enumerator,Use PowerView to query the Active Directory server to determine remote admins,discovery,T1069.002,Permission Groups Discovery: Domain Groups
+46098c66-8d9a-4d23-8a95-dd5021c385ae,stockpile,Linux Enumeration & Privilege Escalation Discovery Script,Download and execute LinEnum.sh,discovery,T1082,System Information Discovery

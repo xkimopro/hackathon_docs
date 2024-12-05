@@ -1,0 +1,92 @@
+----FLOW FILTERS----
+when the local network is one of the following networks
+when the destination network is one of the following networks
+when the IP protocol is one of the following protocols
+when the source port is one of the following ports
+when the destination port is one of the following ports
+when the local port is one of the following ports
+when the remote port is one of the following ports
+when the source IP is one of the following IP addresses
+when the destination IP is one of the following IP addresses
+when the local IP is one of the following IP addresses
+when the remote IP is one of the following IP addresses
+when either the source or destination IP is one of the following IP addresses
+when the flow(s) occur on the selected day of the month
+when the flow(s) occur on any of these days of the week
+when the flow(s) occur after this time
+when the event category for the event is one of the following categories
+when the flow context is this context
+when the source is local or remote {default: remote}
+when the destination is local or remote {default: remote}
+when the local source host destination port is open either actively or passively seen
+when the local source host exists either actively or passively seen
+when the local source host profile age is greater than this number of time intervals
+when the local source host profile port age is greater than this number of time intervals
+when the source is located in this geographic location
+when the destination asset has a weight greater than this weight
+when a flow matches any|all of the following rules
+when all of these rules, in|in any order, from the same|any source IP to the same|any destination IP, over this many seconds
+when a subset of at least this number of these rules, in|in any order, from the same|any source IP to the same|any destination IP, over this many seconds
+when this sequence of rules, involving the same source and destination hosts in this many seconds
+when a(n) source IP matches more than|exactly this many of these rules across more than|exactly this many destination IP, over this many minutes
+when any of these rules with the same source IP more than this many times, across more than|exactly this many destination IP within this many minutes
+when a subset of at least this many of these rules, in|in any order, with the same source IP followed by a subset of at least this many of these rules in|in any order to|from the same destination IP from the previous sequence, within this many minutes
+when the hostname matches the following regex
+when the source IP is vulnerable to one of the following OSVDB IDs
+when the source IP is a part of any of the following remote network locations
+when the source IP is a part of any of the following remote services network locations
+when the source IP is a part of any of the following geographic network locations
+when any of these flow properties are contained in any of these reference set(s)
+when any of these flow properties is the key and any of these flow properties is the value in any of these reference maps
+when any of these flow properties is the key and any of these flow properties is the value in any of these reference map of sets
+when any of these flow properties is the key of the first map and any of these flow properties is the key of the second map and any of these flow properties is the value in any of these reference map of maps
+when Reference Table Key data matches any selected flow properties and selected reference table column Select operator the value of selected flow property
+when this host property is categorized by X-Force as this category with confidence value equal to this amount
+when URL (custom) is categorized by X-Force as one of the following categories
+when the flow bias is any of the following bias
+when the source bytes is greater than this amount
+when the number of source hosts is greater than this amount
+when the source packet rate is greater than value packets/second
+when the flow duration is greater than value seconds
+when the source payload matches the regex string
+when the name of the flow source is one of these sources
+when the flow interface is one of these interfaces
+when the flow type is one of these flow types
+when destination host has a CVSS risk value greater than this amount
+when the source byte/packet ratio is greater than value bytes/packet
+when the ICMP type is any of these types
+when the ICMP code is any of these codes
+when destination port has a CVSS risk value greater than this amount
+when destination DSCP value is any of these values
+when destination IP precedence value is any of these values
+when the source/destination packet ratio is greater than this value
+when the destination TCP flags are exactly these flags
+when the list of input IF (interface) indexes includes all of these values
+when the flow is processed by one of these Custom Rule Engines
+when the destination TCP flags are any of these flag combinations
+when the source or destination port is any of these ports
+when the flow matches this search filter
+when the destination side of the flow has payload data
+when any of these properties match this regular expression
+when any of these properties contain any of these hexadecimal values
+when at least this many flows are seen with the same flow properties in this many minutes
+when at least this many flows are seen with the same flow properties and different flow properties in this many minutes
+when these rules match at least this many times in this many minutes
+when these rules match at least this many times with the same flow properties in this many minutes
+when these rules match at least this many times with the same flow properties and different flow properties in this many minutes
+when these rules match at least this many times in this many minutes after any of these rules match
+when these rules match at least this many times with the same flow properties in this many minutes after these rules match
+when these rules match at least this many times with the same flow properties and different flow properties in this many minutes after these rules match
+when these rules match at least this many times in this many minutes after any of these rules match with the same flow properties
+when these rules match at least this many times with the same flow properties in this many minutes after these rules match with the same flow properties
+when these rules match at least this many times with the same flow properties and different flow properties in this many minutes after these rules match with the same flow properties
+when at least this many flows are seen with the same flow properties and different flow properties in this many minutes after these rules match
+when at least this many flows are seen with the same flow properties in this many minutes after these rules match with the same flow properties
+when at least this many flows are seen with the same flow properties and different flow properties in this many minutes after these rules match with the same flow properties
+when none of these rules match in this many minutes after these rules match with the same flow properties
+when none of these rules match in this many minutes after these rules match
+when the domain is one of the following domains
+when the flow matches this AQL filter query
+when this property equals this property
+when the flow(s) occur between this time and this time
+----FLOW FILTERS----
